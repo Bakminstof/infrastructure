@@ -25,24 +25,10 @@ if %ERRORLEVEL% neq 0 (
     set USE_LFS=1
 )
 
-:: Клонирование, если репозиторий отсутствует
-if not exist "%LOCAL_DIR%\.git" (
-    echo Клонирование репозитория (shallow clone, depth=1)
-    git clone --depth 1 "%REPO_URL%" "%LOCAL_DIR%"
-    if %ERRORLEVEL% neq 0 (
-        echo Ошибка при клонировании репозитория
-        exit /b 1
-    )
-    echo Клонирование завершено.
-    cd /d "%LOCAL_DIR%"
-    if %USE_LFS%==1 git lfs pull
-    timeout /t 5 >nul
-    exit /b 0
-)
+echo Обновление репозитория
 
-:: Обновление существующего репозитория
-echo Обновление существующего репозитория
 cd /d "%LOCAL_DIR%"
+
 git fetch --depth=1 origin
 if %ERRORLEVEL% neq 0 (
     echo Ошибка при fetch

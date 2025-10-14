@@ -20,19 +20,7 @@ else
     USE_LFS=true
 fi
 
-# Клонирование, если репозиторий отсутствует
-if [ ! -d "$LOCAL_DIR/.git" ]; then
-    echo "Клонирование репозитория (shallow clone, depth=1)"
-    git clone --depth 1 "$REPO_URL" "$LOCAL_DIR"
-    echo "Клонирование завершено."
-    cd "$LOCAL_DIR"
-    $USE_LFS && git lfs pull
-    sleep 5
-    exit 0
-fi
-
-# Обновление существующего репозитория
-echo "Обновление существующего репозитория"
+echo "Обновление репозитория"
 cd "$LOCAL_DIR"
 git fetch --depth=1 origin
 git reset --hard origin/$DEFAULT_BRANCH
