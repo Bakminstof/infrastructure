@@ -37,7 +37,7 @@ fi
 echo "Обновление существующего репозитория..."
 cd "$LOCAL_DIR" || { echo "Не удалось перейти в каталог $LOCAL_DIR"; exit 1; }
 git fetch --depth=1 origin
-git reset --hard origin/main
+git reset --hard origin/master
 $USE_LFS && git lfs pull
 if [ $? -ne 0 ]; then
     echo "Ошибка при обновлении репозитория"

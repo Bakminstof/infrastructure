@@ -32,7 +32,7 @@ if not exist "%LOCAL_DIR%\.git" (
 echo "Обновление существующего репозитория..."
 cd /d "%LOCAL_DIR%"
 git fetch --depth=1 origin
-git reset --hard origin/main
+git reset --hard origin/master
 git lfs pull
 if %ERRORLEVEL% neq 0 (
     echo Ошибка при обновлении репозитория
