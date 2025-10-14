@@ -1,8 +1,9 @@
 #!/bin/bash
+set -e
 
 # === Настройки ===
 REPO_URL="git@github.com:Bakminstof/BatchScripts.git"
-
+DEFAULT_BRANCH="master"
 LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Проверка наличия git
@@ -21,26 +22,22 @@ fi
 
 # Клонирование, если репозиторий отсутствует
 if [ ! -d "$LOCAL_DIR/.git" ]; then
-    echo "Клонирование репозитория (shallow clone, depth=1)..."
+    echo "Клонирование репозитория (shallow clone, depth=1)"
     git clone --depth 1 "$REPO_URL" "$LOCAL_DIR"
-    if [ $? -ne 0 ]; then
-        echo "Ошибка при клонировании репозитория"
-        exit 1
-    fi
     echo "Клонирование завершено."
-    cd "$LOCAL_DIR" || exit 1
+    cd "$LOCAL_DIR"
     $USE_LFS && git lfs pull
+    sleep 5
     exit 0
 fi
 
 # Обновление существующего репозитория
-echo "Обновление существующего репозитория..."
-cd "$LOCAL_DIR" || { echo "Не удалось перейти в каталог $LOCAL_DIR"; exit 1; }
+echo "Обновление существующего репозитория"
+cd "$LOCAL_DIR"
 git fetch --depth=1 origin
-git reset --hard origin/master
+git reset --hard origin/$DEFAULT_BRANCH
 $USE_LFS && git lfs pull
-if [ $? -ne 0 ]; then
-    echo "Ошибка при обновлении репозитория"
-    exit 1
-fi
 echo "Репозиторий успешно обновлён."
+
+# Ждём 5 секунд перед завершением
+sleep 5
