@@ -6,7 +6,6 @@
 
 ## Загрузка и обновление репозитория
 
-### Windows
 ```bash
 git clone --depth 1 git@github.com:Bakminstof/BatchScripts.git
 cd BatchScripts
