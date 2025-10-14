@@ -19,7 +19,7 @@ if %errorlevel% neq 0 (
 
 rem --- Определение путей ---
 set "SCRIPT_DIR=%~dp0"
-set "PS_SCRIPT=%SCRIPT_DIR%Reconnect-AllAdapters.ps1"
+set "PS_SCRIPT=%SCRIPT_DIR%Scripts\Reconnect-AllAdapters\Reconnect-AllAdapters.ps1"
 
 if not exist "%PS_SCRIPT%" (
     echo [ОШИБКА] Не найден файл PowerShell-скрипта: "%PS_SCRIPT%"
