@@ -1,4 +1,5 @@
 @echo off
+@chcp 65001 > nul
 setlocal
 
 :: === Настройки ===
@@ -15,7 +16,7 @@ if %ERRORLEVEL% neq 0 (
 
 :: Клонирование, если репозиторий отсутствует
 if not exist "%LOCAL_DIR%\.git" (
-    echo Клонирование репозитория (shallow clone, depth=1)...
+    echo "Клонирование репозитория (shallow clone, depth=1)..."
     git clone --depth 1 "%REPO_URL%" "%LOCAL_DIR%"
     if %ERRORLEVEL% neq 0 (
         echo Ошибка при клонировании репозитория
@@ -28,7 +29,7 @@ if not exist "%LOCAL_DIR%\.git" (
 )
 
 :: Обновление существующего репозитория
-echo Обновление существующего репозитория...
+echo "Обновление существующего репозитория..."
 cd /d "%LOCAL_DIR%"
 git fetch --depth=1 origin
 git reset --hard origin/main
