@@ -2,9 +2,8 @@
 setlocal
 
 :: === Настройки ===
-set REPO_URL=https://github.com/<user>/<repo>.git
+set REPO_URL=git@github.com:Bakminstof/BatchScripts.git
 
-:: Каталог BatchScripts — скрипт внутри него
 set LOCAL_DIR=%~dp0
 
 :: Проверка наличия git

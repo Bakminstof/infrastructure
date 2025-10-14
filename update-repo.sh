@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # === Настройки ===
-REPO_URL="https://github.com/<user>/<repo>.git"
+REPO_URL="git@github.com:Bakminstof/BatchScripts.git"
 
-# Каталог скрипта = BatchScripts
 LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Проверка наличия git
