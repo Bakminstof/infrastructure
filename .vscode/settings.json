@@ -1,0 +1,14 @@
+{
+  "[powershell]": {
+    "editor.defaultFormatter": "ms-vscode.powershell",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "powershell.codeFormatting.preset": "OTBS",
+  "powershell.codeFormatting.autoCorrectAliases": true,
+  "powershell.codeFormatting.useCorrectCasing": true,
+  "powershell.codeFormatting.newLineAfterCloseBrace": true,
+  "powershell.scriptAnalysis.settingsPath": ".vscode/PSScriptAnalyzerSettings.psd1"
+}
