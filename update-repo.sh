@@ -2,7 +2,7 @@
 set -e
 
 # === Настройки ===
-REPO_URL="git@github.com:Bakminstof/BatchScripts.git"
+REPO_URL="git@github.com:Bakminstof/infrastructure.git"
 DEFAULT_BRANCH="master"
 LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 

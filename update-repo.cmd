@@ -3,7 +3,7 @@ chcp 65001 > nul
 setlocal
 
 :: === Настройки ===
-set REPO_URL=git@github.com:Bakminstof/BatchScripts.git
+set REPO_URL=git@github.com:Bakminstof/infrastructure.git
 set DEFAULT_BRANCH=master
 set LOCAL_DIR=%~dp0
 
