@@ -16,8 +16,15 @@ $InformationPreference = "Continue"
 $libsRoot = Join-Path $PSScriptRoot "..\..\Libs\PS" -Resolve
 $scriptsRoot = Join-Path $PSScriptRoot "..\..\Scripts" -Resolve
 $binariesDir = Join-Path $PSScriptRoot "..\..\Binaries" -Resolve
+$saltBinariesDir = Join-Path $binariesDir "Salt" -Resolve
 
 Import-Module (Join-Path $libsRoot "LoggingUtils.psm1") -Force
+Import-Module (Join-Path $libsRoot "BinaryMetadata.psm1") -Force
+Import-Module (Join-Path $libsRoot "DefaultConfig.psm1") -Force
+
+# === Файл метаданных ===
+$metadataFile = Join-Path $saltBinariesDir $DefaultBinaryMetadataFileName
+$existingVersion = Get-BinaryVersion -FilePath $metadataFile
 
 $githubLatestVersinGetter = Join-Path $scriptsRoot "GitHub/Get-GitHubLatestVersion.ps1"
 
@@ -30,10 +37,15 @@ $latestVersionNum = $latestVersion.Replace("v", "")
 
 $saltMinionUrl = "https://github.com/$saltRepoName/releases/download/$latestVersion/Salt-Minion-$latestVersionNum-Py3-AMD64-Setup.exe"
 
-Write-LogMessage "Последняя версия: $latestVersion"
+Write-LogMessage "Последняя версия: $latestVersion" -NoFileLog
 
-# === Скачиваем установщик ===
-Write-LogMessage "Скачиваю обновление: $saltMinionUrl"
-Invoke-WebRequest -Uri $saltMinionUrl -OutFile $saltMinionPath -UseBasicParsing -ErrorAction Stop
-Write-LogMessage "Обновлено: $saltMinionPath"
-Write-LogMessage "=== Обновление Salt Minion успешно завершено ==="
+if ($existingVersion -eq $latestVersion) {
+    Write-LogMessage "Salt Minion уже актуален: $latestVersion" -NoFileLog
+} else {
+    Write-LogMessage "Скачиваю обновление: $saltMinionUrl" -NoFileLog
+    Invoke-WebRequest -Uri $saltMinionUrl -OutFile $saltMinionPath -UseBasicParsing -ErrorAction Stop
+    Write-LogMessage "Обновлено: $saltMinionPath" -NoFileLog
+
+    Update-BinaryMetadata -FilePath $metadataFile -Name "salt-minion" -Version $latestVersion
+    Write-LogMessage "Метаданные обновлены: $metadataFile" -NoFileLog
+}
