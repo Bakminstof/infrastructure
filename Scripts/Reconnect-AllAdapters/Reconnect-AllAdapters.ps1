@@ -8,8 +8,16 @@ param(
     [switch]$SkipBackup
 )
 
+# === Strict & Safe Mode ===
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
+$WarningPreference = "Continue"
+$InformationPreference = "Continue"
+
 # === Импорт библиотек ===
-$libsRoot = Join-Path $PSScriptRoot "..\..\Libs\PS"
+$libsRoot = Join-Path $PSScriptRoot "..\..\Libs\PS" -Resolve
+
 Import-Module (Join-Path $libsRoot "LoggingUtils.psm1") -Force
 Import-Module (Join-Path $libsRoot "NetworkUtils.psm1") -Force
 Import-Module (Join-Path $libsRoot "AccessUtils.psm1") -Force
