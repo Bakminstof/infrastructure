@@ -66,7 +66,7 @@ $installArgs = @(
   "/passive",
   "/q",
   "/norestart",
-  "/log `"$global:logFile.install.log`""
+  "/log `"$global:logFile`""
 ) -join ' '
 
 Write-LogMessage "Запускаю установку WinDirStat"
