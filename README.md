@@ -7,7 +7,7 @@
 ## Загрузка и обновление репозитория
 
 ```bash
-git clone --depth 1 git@github.com:Bakminstof/BatchScripts.git
+git clone --depth 1 git@github.com:Bakminstof/infrastructure.git
 cd BatchScripts
 git lfs pull
 ```
