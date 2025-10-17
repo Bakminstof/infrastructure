@@ -6,3 +6,4 @@
 *.sh    text eol=lf
 
 Binaries/*/*.exe filter=lfs diff=lfs merge=lfs -text
+Binaries/*/*.msi filter=lfs diff=lfs merge=lfs -text

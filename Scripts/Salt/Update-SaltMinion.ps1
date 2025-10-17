@@ -16,7 +16,7 @@ $InformationPreference = "Continue"
 $libsRoot = Join-Path $PSScriptRoot "..\..\Libs\PS" -Resolve
 $scriptsRoot = Join-Path $PSScriptRoot "..\..\Scripts" -Resolve
 $binariesDir = Join-Path $PSScriptRoot "..\..\Binaries" -Resolve
-$saltBinariesDir = Join-Path $binariesDir "Salt" -Resolve
+$saltBinariesDir = Join-Path $binariesDir "Salt"
 
 Import-Module (Join-Path $libsRoot "LoggingUtils.psm1") -Force
 Import-Module (Join-Path $libsRoot "BinaryMetadata.psm1") -Force
@@ -39,13 +39,18 @@ $saltMinionUrl = "https://github.com/$saltRepoName/releases/download/$latestVers
 
 Write-LogMessage "Последняя версия: $latestVersion" -NoFileLog
 
-if ($existingVersion -eq $latestVersion) {
-    Write-LogMessage "Salt Minion уже актуален: $latestVersion" -NoFileLog
-} else {
-    Write-LogMessage "Скачиваю обновление: $saltMinionUrl" -NoFileLog
-    Invoke-WebRequest -Uri $saltMinionUrl -OutFile $saltMinionPath -UseBasicParsing -ErrorAction Stop
-    Write-LogMessage "Обновлено: $saltMinionPath" -NoFileLog
+if (-not (Test-Path $saltBinariesDir )) {
+  Write-LogMessage "Создаю директорию: $saltBinariesDir" -NoFileLog
+  New-Item -ItemType Directory -Path $saltBinariesDir -Force | Out-Null
+}
 
-    Update-BinaryMetadata -FilePath $metadataFile -Name "salt-minion" -Version $latestVersion
-    Write-LogMessage "Метаданные обновлены: $metadataFile" -NoFileLog
+if ($existingVersion -eq $latestVersion) {
+  Write-LogMessage "Salt Minion уже актуален: $latestVersion" -NoFileLog
+} else {
+  Write-LogMessage "Скачиваю обновление: $saltMinionUrl" -NoFileLog
+  Invoke-WebRequest -Uri $saltMinionUrl -OutFile $saltMinionPath -UseBasicParsing -ErrorAction Stop
+  Write-LogMessage "Обновлено: $saltMinionPath" -NoFileLog
+
+  Update-BinaryMetadata -FilePath $metadataFile -Name "salt-minion" -Version $latestVersion
+  Write-LogMessage "Метаданные обновлены: $metadataFile" -NoFileLog
 }

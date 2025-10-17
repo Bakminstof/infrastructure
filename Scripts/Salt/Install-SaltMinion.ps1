@@ -8,13 +8,12 @@
 
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$MasterAddress,             # IP или DNS мастера
-    [string]$MinionId = $env:COMPUTERNAME,
-    [string]$BaseToolsDir = "C:\Tools",
-    [string]$SaltInstallDir = "$BaseToolsDir\Salt",
-    [string]$DownloadDir = "$env:TEMP",
-    [switch]$SkipInstallCheck
+  [Parameter(Mandatory = $true)]
+  [string]$MasterAddress,             # IP или DNS мастера
+  [string]$MinionId = $env:COMPUTERNAME,
+  [string]$BaseToolsDir = "C:\Tools",
+  [string]$SaltInstallDir = "$BaseToolsDir\Salt",
+  [switch]$SkipInstallCheck
 )
 
 # === Strict & Safe Mode ===
@@ -57,14 +56,14 @@ Write-LogMessage "Minion ID: $MinionId"
 
 # === Проверяем наличие C:\Tools ===
 if (-not (Test-Path $BaseToolsDir)) {
-    Write-LogMessage "Создаю директорию $BaseToolsDir"
-    New-Item -ItemType Directory -Path $BaseToolsDir -Force | Out-Null
+  Write-LogMessage "Создаю директорию $BaseToolsDir"
+  New-Item -ItemType Directory -Path $BaseToolsDir -Force | Out-Null
 }
 
 # === Проверяем существующую установку ===
 if (-not $SkipInstallCheck -and (Test-Path "$saltMinionPath")) {
-    Write-LogMessage "Salt Minion уже установлен в $SaltInstallDir — пропускаю установку." "WARN"
-    exit 0
+  Write-LogMessage "Salt Minion уже установлен в $SaltInstallDir — пропускаю установку." "WARN"
+  exit 0
 }
 
 # === Тихая установка ===
@@ -78,8 +77,8 @@ $status = (Get-Service salt-minion).Status
 Write-LogMessage "Статус службы: $status"
 
 if ($status -ne "Running") {
-    Write-LogMessage "Salt Minion не запущен. Проверь логи вручную." "ERROR"
-    exit 1
+  Write-LogMessage "Salt Minion не запущен. Проверь логи вручную." "ERROR"
+  exit 1
 }
 
 Write-LogMessage "=== Установка Salt Minion завершена успешно ==="

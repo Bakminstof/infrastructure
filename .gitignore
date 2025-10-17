@@ -2,3 +2,5 @@
 /Scripts/Reconnect-AllAdapters/logs
 
 /Scripts/Salt/logs
+
+/Scripts/WinDirStat/logs
