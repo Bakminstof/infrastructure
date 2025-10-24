@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"powershell.codeFormatting.preset": "OTBS",
+		"powershell.codeFormatting.autoCorrectAliases": true,
+		"powershell.codeFormatting.useCorrectCasing": true,
+		"powershell.codeFormatting.newLineAfterCloseBrace": true,
+		"powershell.scriptAnalysis.settingsPath": ".vscode/PSScriptAnalyzerSettings.psd1"
+	}
+}

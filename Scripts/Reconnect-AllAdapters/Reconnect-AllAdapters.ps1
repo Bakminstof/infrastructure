@@ -57,22 +57,18 @@ foreach ($if in $adapters) {
 
     Write-LogMessage "=== Обработка адаптера: $name ==="
 
-    try {
-        Write-LogMessage "Сброс DNS"
-        Set-DnsClientServerAddress -InterfaceIndex $idx -ResetServerAddresses -ErrorAction Stop
-        Clear-DnsClientCache | Out-Null
-    } catch { Write-LogMessage "Ошибка сброса DNS: $_" "WARN" }
-
     $ipIfV4 = Get-NetIPInterface -InterfaceIndex $idx -AddressFamily IPv4 -ErrorAction SilentlyContinue
     if ($ipIfV4.Dhcp -eq 'Enabled') {
         Invoke-DhcpRelease $name
     } else {
+        Write-LogMessage "=== Переключаю адаптер $name на DHCP ==="
         Get-NetIPAddress -InterfaceIndex $idx -AddressFamily IPv4 -ErrorAction SilentlyContinue |
         Where-Object { $_.PrefixOrigin -eq 'Manual' } |
         ForEach-Object {
             Write-LogMessage "Удаляю IPv4 $($_.IPAddress)"
             Remove-NetIPAddress -InterfaceIndex $idx -IPAddress $_.IPAddress -Confirm:$false -ErrorAction SilentlyContinue
         }
+        Set-AdapterDhcp -AdapterName $name
     }
 
     # Отключение / включение

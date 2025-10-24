@@ -92,3 +92,37 @@ function Save-NetworkConfig {
         Write-LogMessage "Ошибка при сохранении бэкапа: $_" "ERROR"
     }
 }
+
+function Set-AdapterDhcp {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][string]$AdapterName
+    )
+
+    # Получаем индекс адаптера
+    $adapter = Get-NetAdapter -Name $AdapterName -ErrorAction SilentlyContinue
+    if (-not $adapter) {
+        Write-LogMessage "Адаптер $AdapterName не найден" "ERROR"
+        return
+    }
+    $idx = $adapter.InterfaceIndex
+
+    try {
+        Write-LogMessage "Включаю DHCP для IP на адаптере $AdapterName"
+        Set-NetIPInterface -InterfaceIndex $idx -Dhcp Enabled -ErrorAction Stop
+
+        Write-LogMessage "Сбрасываю DNS для адаптера $AdapterName"
+        Set-DnsClientServerAddress -InterfaceIndex $idx -ResetServerAddresses -ErrorAction Stop
+
+        # Очистка кеша DNS
+        Clear-DnsClientCache | Out-Null
+
+        # Освобождаем и заново получаем IP
+        Invoke-DhcpRelease $AdapterName
+        Invoke-DhcpRenew $AdapterName
+
+        Write-LogMessage "Адаптер $AdapterName успешно переключен на DHCP"
+    } catch {
+        Write-LogMessage "Ошибка при переводе адаптера $AdapterName на DHCP: $_" "ERROR"
+    }
+}
