@@ -1,6 +1,6 @@
+logs
+
 /Scripts/Reconnect-AllAdapters/backups
-/Scripts/Reconnect-AllAdapters/logs
 
-/Scripts/Salt/logs
-
-/Scripts/WinDirStat/logs
+/Scripts/DNS/Zones
+/Scripts/DNS/backups
