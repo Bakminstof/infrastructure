@@ -5,16 +5,6 @@
   Модуль предоставляет функции для создания, чтения и обновления метаданных бинарного файла.
 #>
 
-# === Настройка кодировки для вывода в файл ===
-$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8BOM'
-
-if ($PSVersionTable.PSVersion.Major -lt 6) {
-    $OutFileEncoding = [System.Text.Encoding]::UTF8
-}
-else {
-    $OutFileEncoding = 'utf8'
-}
-
 function Get-BinaryMetadata {
     param (
         [Parameter(Mandatory)]

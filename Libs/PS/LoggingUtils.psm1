@@ -4,6 +4,7 @@
 # Поддержка цветного вывода в интерактивной консоли
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8BOM'
 
 function Write-LogMessage {
     [CmdletBinding()]
