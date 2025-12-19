@@ -1,6 +1,6 @@
 logs
-
-/Scripts/Reconnect-AllAdapters/backups
+backups
 
 /Scripts/DNS/Zones
-/Scripts/DNS/backups
+
+*.env
