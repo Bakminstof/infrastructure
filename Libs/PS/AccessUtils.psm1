@@ -18,7 +18,8 @@ function Confirm-RunAsAdmin {
         
         try {
             [System.Diagnostics.Process]::Start($psi) | Out-Null
-        } catch {
+        }
+        catch {
             Write-Error "Не удалось запросить повышение прав: $_"
         }
         

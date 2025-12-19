@@ -10,7 +10,8 @@ $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8BOM'
 
 if ($PSVersionTable.PSVersion.Major -lt 6) {
     $OutFileEncoding = [System.Text.Encoding]::UTF8
-} else {
+}
+else {
     $OutFileEncoding = 'utf8'
 }
 
@@ -27,7 +28,8 @@ function Get-BinaryMetadata {
     try {
         $json = Get-Content -Path $FilePath -Raw
         return ConvertFrom-Json $json
-    } catch {
+    }
+    catch {
         Write-Warning "Не удалось прочитать метаданные: $_"
         return @{}
     }
@@ -49,7 +51,8 @@ function Update-BinaryMetadata {
     if ($metadata) {
         $metadata.Version = $Version
         $metadata.UpdatedAt = $utcNow
-    } else {
+    }
+    else {
         $metadata = [PSCustomObject]@{
             Name      = $Name
             Version   = $Version

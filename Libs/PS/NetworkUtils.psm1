@@ -88,7 +88,8 @@ function Save-NetworkConfig {
         $utf8BOM = New-Object System.Text.UTF8Encoding $true
         [System.IO.File]::WriteAllText($BackupFile, $json, $utf8BOM)
         Write-LogMessage "Бэкап сохранён: $BackupFile"
-    } catch {
+    }
+    catch {
         Write-LogMessage "Ошибка при сохранении бэкапа: $_" "ERROR"
     }
 }
@@ -122,7 +123,8 @@ function Set-AdapterDhcp {
         Invoke-DhcpRenew $AdapterName
 
         Write-LogMessage "Адаптер $AdapterName успешно переключен на DHCP"
-    } catch {
+    }
+    catch {
         Write-LogMessage "Ошибка при переводе адаптера $AdapterName на DHCP: $_" "ERROR"
     }
 }

@@ -1,12 +1,18 @@
-﻿<#
-.SYNOPSIS
-  Дефолтные переменные для скриптов.
-.DESCRIPTION
-  Модуль содержит значения дефолтную конфигурацию.
-#>
+﻿# DefaultConfig.psm1
 
-# Имя файла метаданных бинарника
-$DefaultBinaryMetadataFileName = "info.json"
+$script:ModuleRoot = $PSScriptRoot
 
-# Export
-Export-ModuleMember -Variable DefaultBinaryMetadataFileName
+$script:RootDir = Split-Path (Split-Path $script:ModuleRoot -Parent) -Parent
+
+
+$script:Defaults = [PSCustomObject]@{
+  RootDir                = $RootDir
+  EnvironmentPath        = Join-Path $RootDir "Config/BaseConfig.env"
+  BinaryMetadataFileName = "info.json"
+}
+
+function Get-Defaults {
+  return $script:Defaults
+}
+
+Export-ModuleMember -Function Get-Defaults

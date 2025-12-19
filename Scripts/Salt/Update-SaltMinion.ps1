@@ -23,7 +23,7 @@ Import-Module (Join-Path $libsRoot "BinaryMetadata.psm1") -Force
 Import-Module (Join-Path $libsRoot "DefaultConfig.psm1") -Force
 
 # === Файл метаданных ===
-$metadataFile = Join-Path $saltBinariesDir $DefaultBinaryMetadataFileName
+$metadataFile = Join-Path $saltBinariesDir [InfraDefaults]::BinaryMetadataFileName
 $existingVersion = Get-BinaryVersion -FilePath $metadataFile
 
 $githubLatestVersinGetter = Join-Path $scriptsRoot "GitHub/Get-GitHubLatestVersion.ps1"
@@ -46,7 +46,8 @@ if (-not (Test-Path $saltBinariesDir )) {
 
 if ($existingVersion -eq $latestVersion) {
   Write-LogMessage "Salt Minion уже актуален: $latestVersion" -NoFileLog
-} else {
+}
+else {
   Write-LogMessage "Скачиваю обновление: $saltMinionUrl" -NoFileLog
   Invoke-WebRequest -Uri $saltMinionUrl -OutFile $saltMinionPath -UseBasicParsing -ErrorAction Stop
   Write-LogMessage "Обновлено: $saltMinionPath" -NoFileLog

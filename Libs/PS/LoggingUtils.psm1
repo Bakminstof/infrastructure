@@ -36,7 +36,8 @@ function Write-LogMessage {
 
             $utf8BOM = New-Object System.Text.UTF8Encoding($true)
             [System.IO.File]::AppendAllText($logFile, "$line`r`n", $utf8BOM)
-        } catch {
+        }
+        catch {
             # fallback: вывод предупреждения в консоль
             Write-Output ("[WARN] Ошибка записи в лог-файл '{0}': {1}" -f $logFile, $_.Exception.Message)
         }
@@ -54,7 +55,8 @@ function Write-LogMessage {
 
         if ($Host.UI -and $Host.UI.RawUI) {
             try { Write-Host $line -ForegroundColor $color } catch { Write-Output $line }
-        } else {
+        }
+        else {
             Write-Output $line
         }
     }

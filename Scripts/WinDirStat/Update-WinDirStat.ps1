@@ -22,8 +22,10 @@ Import-Module (Join-Path $libsRoot "LoggingUtils.psm1") -Force
 Import-Module (Join-Path $libsRoot "BinaryMetadata.psm1") -Force
 Import-Module (Join-Path $libsRoot "DefaultConfig.psm1") -Force
 
+$cfg = Get-Defaults
+
 # === Файл метаданных ===
-$metadataFile = Join-Path $windirstatBinariesDir $DefaultBinaryMetadataFileName
+$metadataFile = Join-Path $windirstatBinariesDir $cfg.BinaryMetadataFileName
 $existingVersion = Get-BinaryVersion -FilePath $metadataFile
 
 $githubLatestVersinGetter = Join-Path $scriptsRoot "GitHub/Get-GitHubLatestVersion.ps1"
@@ -45,7 +47,8 @@ if (-not (Test-Path $windirstatBinariesDir )) {
 
 if ($existingVersion -eq $latestVersion) {
   Write-LogMessage "WinDirStat уже актуален: $latestVersion" -NoFileLog
-} else {
+}
+else {
   Write-LogMessage "Скачиваю обновление: $windirstatUrl" -NoFileLog
   Invoke-WebRequest -Uri $windirstatUrl -OutFile $windirstatPath -UseBasicParsing -ErrorAction Stop
   Write-LogMessage "Обновлено: $windirstatPath" -NoFileLog
